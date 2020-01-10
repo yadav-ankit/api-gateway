@@ -1,0 +1,8 @@
+
+Only request of /authenticate (post request) will be used to Run authentication. Rest all request either 
+get or post must have valid JWT token to get their response. This is the first step that happens 
+in WebSecurityConfig class in background.
+
+Now when first /authenticate request comes then in JwtAuthenticationController I need to encrypt the 
+password and depending upon sign up or login i have to generate the token.
+
