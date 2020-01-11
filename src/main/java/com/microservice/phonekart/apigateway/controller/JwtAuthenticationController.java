@@ -40,6 +40,12 @@ public class JwtAuthenticationController {
 		
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
+		
+		boolean userExisit = userDetailsService.checkIfUserExist(authenticationRequest.getUsername());
+		
+		if(!userExisit) {
+			userDetailsService.createNewRecord(authenticationRequest);
+		}
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
