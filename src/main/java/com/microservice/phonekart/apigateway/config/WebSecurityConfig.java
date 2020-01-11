@@ -17,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Configuration
  @EnableWebSecurity
  @EnableGlobalMethodSecurity(prePostEnabled = true)
+@CrossOrigin
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -33,14 +36,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
+		
 		httpSecurity.csrf().disable()
-				.authorizeRequests().antMatchers("/authenticate").permitAll()
-				 .anyRequest().authenticated()
+				.authorizeRequests().antMatchers("/register","/signin").permitAll().anyRequest().authenticated()
+				.and().cors()
 				.and().exceptionHandling().authenticationEntryPoint((JwtAuthenticationEntryPoint) jwtAuthenticationEntryPoint)
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().headers()
+				 // the headers you want here. This solved all my CORS problems! 
+		        .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
+		        .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST, GET"))
+		        .addHeaderWriter(new StaticHeadersWriter("Access-Control-Max-Age", "3600"))
+		        .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
+		        .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"));
+		;
 
-		// Add a filter to validate the tokens with every request
-		httpSecurity.addFilterBefore((Filter) jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+			// Add a filter to validate the tokens with every request
+	//	httpSecurity.addFilterBefore((Filter) jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        
+
 	}
 	
 	

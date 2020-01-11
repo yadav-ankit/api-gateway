@@ -13,7 +13,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		if ("yadav".equals(username)) {
+		if (username.equals(username)) {
 			return new User(username, "test",
 					new ArrayList<>());
 		} else {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.microservice.phonekart.apigateway.config.JwtTokenUtil;
+import com.microservice.phonekart.apigateway.model.JWTRequestForSignUP;
 import com.microservice.phonekart.apigateway.model.JwtRequest;
 import com.microservice.phonekart.apigateway.model.JwtResponse;
 import com.microservice.phonekart.apigateway.service.JwtUserDetailsService;
@@ -29,9 +30,28 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 	
 	
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JWTRequestForSignUP authenticationRequest) throws Exception {
 
+		System.out.println("Request aayi to yaha pr HHHHHHHH !!!!!");
+		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+		// DB call to check if user exist or i need to save it first..then generate the token.
+		
+		final UserDetails userDetails = userDetailsService
+				.loadUserByUsername(authenticationRequest.getUsername());
+
+		final String token = jwtTokenUtil.generateToken(userDetails);
+
+		return ResponseEntity.ok(new JwtResponse(token));
+	}
+	
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	public ResponseEntity<?> createAuthenticationTokenFoRSignIN(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
+		System.out.println("Request aayi SIGN IN to yaha pr  !!!!!");
+
+	
 		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		// DB call to check if user exist or i need to save it first..then generate the token.
