@@ -15,8 +15,7 @@
       <property name="hibernate.current_session_context_class">thread</property>
       
      
-       <mapping class="com.example.PhoneKart.model.classicmodel.Customers"/>
-       <mapping class="com.example.PhoneKart.model.classicmodel.Orders"/>
+       <mapping class="com.microservice.phonekart.apigateway.microService_model.User"/>
       <!-- 
        <mapping class="com.example.PhoneKart.model.classicmodel.Employees"/>
        <mapping class="com.example.PhoneKart.model.classicmodel.Offices"/>

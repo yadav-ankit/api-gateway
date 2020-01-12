@@ -34,9 +34,6 @@ public class JwtAuthenticationController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JWTRequestForSignUP authenticationRequest) throws Exception {
 
 		System.out.println("Request aayi to yaha pr HHHHHHHH !!!!!");
-		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-		// DB call to check if user exist or i need to save it first..then generate the token.
 		
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
