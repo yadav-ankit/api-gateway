@@ -12,8 +12,8 @@ import javax.persistence.Id;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String user_id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int user_id;
 	
 	@Column(name = "username")
 	private String userName;
@@ -30,10 +30,10 @@ public class User {
 	@Column(name = "singup_Date")
 	private Date signUpDate;
 	
-	public String getUser_id() {
+	public int getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(String user_id) {
+	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
 	public String getUserName() {

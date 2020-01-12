@@ -45,8 +45,12 @@ public class MySQLRepository {
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
-			query = session.createQuery("select user_id from User where username  = :userName");
+			
+			
+			query = session.createQuery("from User u where u.userName  = :userName");
 			query.setParameter("userName", userName);
+			
+				
 			List<Object[]> list = query.getResultList();
 			/*
 			 * for (Object[] arr : list) { System.out.println(Arrays.toString(arr)); }
@@ -59,7 +63,7 @@ public class MySQLRepository {
 			e.printStackTrace();
 
 		} finally {
-		//	session.close();
+			session.close();
 		}
 		return false;
 	}

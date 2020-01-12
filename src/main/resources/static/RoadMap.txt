@@ -1,0 +1,51 @@
+CREATE TABLE user(
+		user_id INT NOT NULL AUTO_INCREMENT,
+		username VARCHAR(40) NOT NULL,
+		name VARCHAR(100) NOT NULL,
+		password VARCHAR(40) NOT NULL,
+		email VARCHAR(40) NOT NULL,
+		singup_Date DATE,
+		
+    PRIMARY KEY ( user_id )
+   );
+   
+   
+   Hibernate: select user0_.user_id as col_0_0_ from User user0_ where username=?
+org.hibernate.property.access.spi.PropertyAccessException: Error accessing field
+ [private java.lang.String com.microservice.phonekart.apigateway.microService_model.User.email] 
+ by reflection for persistent property [com.microservice.phonekart.apigateway.microService_model.User#email] 
+ : com.microservice.phonekart.apigateway.microService_model.User@1a8f06d9
+
+ 
+ ALTER TABLE user CHANGE user_id  INT(10) UNSIGNED NOT NULL
+ 
+ ALTER TABLE user
+DROP PRIMARY KEY,
+CHANGE user_id user_id int(10),
+ADD PRIMARY KEY (user_id);
+
+alter table user DROP PRIMARY KEY,
+change  id int(11) NOT NULL
+
+
+org.hibernate.hql.internal.ast.QuerySyntaxException: unexpected token: * near line 1, 
+column 8 [SELECT * FROM com.rhcloud.giveme.entity.User u WHERE  u.email = :email]
+   
+   
+   You have to omit the SELECT * part, it's implicit:
+   In cases of JOIN use select *  not for single table
+   
+   em.createQuery("FROM User u WHERE  u.email = :email")
+   
+   
+   
+   --------
+   
+    have a very simple Hibernate set up, but I receive this strange error when saving an entity:
+
+org.hibernate.property.access.spi.PropertyAccessException: Error accessing field [
+private java.lang.String com.example.demo.Student.firstName] by reflection for persistent
+ property [com.example.demo.Student#firstName] : Student [id=0, firstName=My, lastName=Name]
+ 
+ 'm using spring framework. After removing the following dependency, it worked:
+ <artifactId>spring-boot-devtools</artifactId>
