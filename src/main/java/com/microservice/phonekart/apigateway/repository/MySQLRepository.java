@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.microservice.phonekart.apigateway.microService_model.User;
 import com.microservice.phonekart.apigateway.model.JWTRequestForSignUP;
 
-
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class MySQLRepository {
 	public boolean getSignedInUser(String userName, String passWord) {
 		Session session = null;
 		Transaction tx;
-		Query query;
+		Query<?> query;
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
@@ -51,7 +51,16 @@ public class MySQLRepository {
 			query.setParameter("userName", userName);
 			query.setParameter("password", passWord);
 			
-			return (query.getResultList().size() == 1);
+			
+			List<User> list = (List<User>) query.getResultList();
+			
+			System.out.println(passWord.equals(list.get(0).getPassword()));
+			
+			
+			System.out.println(list.get(0).getEmail());
+			
+			return (query.getResultList().size() == 1 && userName.equalsIgnoreCase(list.get(0).getUserName())
+					&& passWord.equals(list.get(0).getPassword()));
 
 		} catch (Exception e) {
 
