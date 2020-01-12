@@ -37,6 +37,32 @@ public class MySQLRepository {
         }
     }
 
+	
+	public boolean getSignedInUser(String userName, String passWord) {
+		Session session = null;
+		Transaction tx;
+		Query query;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			
+			
+			query = session.createQuery("from User u where u.userName  = :userName and u.password = :password");
+			query.setParameter("userName", userName);
+			query.setParameter("password", passWord);
+			
+			return (query.getResultList().size() == 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public boolean getUser(String userName) {
 		Session session = null;

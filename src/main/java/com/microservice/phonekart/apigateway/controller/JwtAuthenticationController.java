@@ -28,48 +28,64 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
-	
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JWTRequestForSignUP authenticationRequest) throws Exception {
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JWTRequestForSignUP authenticationRequest)
+			throws Exception {
 
 		System.out.println("Request aayi to yaha pr HHHHHHHH !!!!!");
-		
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername());
-		
-		boolean userExisit =  userDetailsService.checkIfUserExist(authenticationRequest.getUsername());
-		
-		if(!userExisit) {
+
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+		boolean userExisit = userDetailsService.checkIfUserExist(authenticationRequest.getUsername());
+
+		if (!userExisit) {
 			userDetailsService.createNewRecord(authenticationRequest);
 		}
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		JwtResponse response = new JwtResponse(token);
+
+		if (userExisit) {
+			response.setError("User Already exsist. Please choose another Username");
+		} else {
+			response.setMessage("New User Account created succesfully.");
+		}
+
+		return ResponseEntity.ok(response);
 	}
-	
+
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationTokenFoRSignIN(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public ResponseEntity<?> createAuthenticationTokenFoRSignIN(@RequestBody JwtRequest authenticationRequest)
+			throws Exception {
 
 		System.out.println("Request aayi SIGN IN to yaha pr  !!!!!");
 
-	
-		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		boolean userExisit = userDetailsService.checkIfUserAuthorised(authenticationRequest.getUsername(),
+				authenticationRequest.getPassword());
 
-		// DB call to check if user exist or i need to save it first..then generate the token.
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		String token = null;
+
+		JwtResponse response = new JwtResponse(token);
+
+		if (userExisit) {
+			response.setMessage("User Login Succesfully");
+			token = jwtTokenUtil.generateToken(userDetails);
+			response.setToken(token);
+		} else {
+			response.setError("Please check Your Username and/or password");
+			response.setToken(null);
+		}
 		
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername());
-
-		final String token = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(response);
 	}
 
 	private void authenticate(String username, String password) throws Exception {
 		try {
-	//	authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			// authenticationManager.authenticate(new
+			// UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
@@ -77,5 +93,4 @@ public class JwtAuthenticationController {
 		}
 	}
 
-	
 }

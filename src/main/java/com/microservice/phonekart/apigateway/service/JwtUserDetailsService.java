@@ -27,13 +27,13 @@ public class JwtUserDetailsService implements UserDetailsService {
 		}
 	}
 
+
+	public boolean checkIfUserAuthorised(String username,String password)  {
+		return (mysqlRepo.getSignedInUser(username,password));
+	}
+	
 	public boolean checkIfUserExist(String username)  {
-		
-		if (mysqlRepo.getUser(username)) {
-			return true;
-		}
-		
-		return false;
+		return(mysqlRepo.getUser(username)); 
 	}
 
 	public void createNewRecord(JWTRequestForSignUP user) {
