@@ -1,3 +1,45 @@
+-------------
+Things i can do to learn:
+ 1: AWS deployment...via Beanstalk or by EC2 and S3
+ 2: Playing with REST request like getData in POST request or add data in GET Request.
+ 3: Spring -- Different Annonations
+ 4: Use of Apache kafka.
+ 5: Automatic build trigger via Jenkins or AWS or github pages.
+ 6: MongoDB with Hibernate
+ 7: Playing with Hibernate.
+		Like Paging
+		All exceptions occurred log.
+		Joins with other table.
+		Generation startegy.
+		commit , rollback
+		
+ 8: Angular Advance topics like 
+		Custom Directives
+		Subjects
+		Session Management
+		Parent Child.
+ 9: Password encryption ..storing and validating from DB
+ 
+ 10: JAVA Code
+		Exception Handling
+		Test Cases
+		Logging DATA (performanceLog & error Log)
+		JAVA 8 and above usage.
+		Interfaces and Classes.
+		Design Pattern using
+		
+ 11: MicroService:
+		Zuul , Api-Gateway ,Eureka Server , Feign ,
+		RestTemplate , Async-RestTemplate
+		
+ 12: SQL
+		Create ,Alter ,update ,drop commands
+		Joins ,Sequence creation.
+		Group by
+		Indexing.
+		Top 4th element.
+		
+		
 CREATE TABLE user(
 		user_id INT NOT NULL AUTO_INCREMENT,
 		username VARCHAR(40) NOT NULL,

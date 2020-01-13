@@ -53,12 +53,7 @@ public class MySQLRepository {
 			
 			
 			List<User> list = (List<User>) query.getResultList();
-			
-			System.out.println(passWord.equals(list.get(0).getPassword()));
-			
-			
-			System.out.println(list.get(0).getEmail());
-			
+	
 			return (query.getResultList().size() == 1 && userName.equalsIgnoreCase(list.get(0).getUserName())
 					&& passWord.equals(list.get(0).getPassword()));
 
