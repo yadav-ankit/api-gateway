@@ -18,6 +18,7 @@ Things i can do to learn:
 		Subjects
 		Session Management
 		Parent Child.
+		Http Interceptors for token
  9: Password encryption ..storing and validating from DB
  
  10: JAVA Code
@@ -26,7 +27,7 @@ Things i can do to learn:
 		Logging DATA (performanceLog & error Log)
 		JAVA 8 and above usage.
 		Interfaces and Classes.
-		Design Pattern using
+		Design Pattern using SingleTon , Factory
 		
  11: MicroService:
 		Zuul , Api-Gateway ,Eureka Server , Feign ,
