@@ -35,6 +35,8 @@ public class JwtAuthenticationController {
 
 		System.out.println("Request aayi to yaha pr HHHHHHHH !!!!!");
 
+		System.out.println(System.getProperty("java.class.path"));
+		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		boolean userExisit = userDetailsService.checkIfUserExist(authenticationRequest.getUsername());
