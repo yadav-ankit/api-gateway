@@ -6,3 +6,34 @@ in WebSecurityConfig class in background.
 Now when first /authenticate request comes then in JwtAuthenticationController I need to encrypt the 
 password and depending upon sign up or login i have to generate the token.
 
+
+
+How to start?
+
+Angular
+Go to C:\Users\ankyadav\Downloads\Projects\MicroService\Angular\PhoneKart-Angular
+ng build
+ng serve
+
+
+MYSQL
+start MYSQL services from services.msc
+Opem MYSQL Client (demo)
+show databases
+use microservice
+
+
+JAVA
+Two Projects
+API Gateway
+Request Mapping Service
+
+
+
+
+
+
+
+
+http://localhost:4200/login
+
